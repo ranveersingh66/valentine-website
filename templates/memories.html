@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Memories 💞</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+    }
+
+    .wrapper {
+      display: flex;
+      width: max-content;
+      animation: scroll 90s linear infinite;
+    }
+
+    .wrapper img {
+      height: 90vh;
+      object-fit: contain;
+      margin-right: 20px;
+    }
+
+    @keyframes scroll {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <!-- Add ALL 28 images here in order -->
+    <img src="/static/memories/img1.jpg">
+    <img src="/static/memories/img2.jpg">
+    <img src="/static/memories/img3.jpg">
+    <img src="/static/memories/img4.jpg">
+    <img src="/static/memories/img5.jpg">
+    <img src="/static/memories/img6.jpg">
+    <img src="/static/memories/img7.jpg">
+    <img src="/static/memories/img8.jpg">
+    <img src="/static/memories/img9.jpg">
+    <img src="/static/memories/img10.jpg">
+    <img src="/static/memories/img11.jpg">
+    <img src="/static/memories/img12.jpg">
+    <img src="/static/memories/img13.jpg">
+    <img src="/static/memories/img14.jpg">
+    <img src="/static/memories/img15.jpg">
+    <img src="/static/memories/img16.jpg">
+    <img src="/static/memories/img17.jpg">
+    <img src="/static/memories/img18.jpg">
+    <img src="/static/memories/img19.jpg">
+    <img src="/static/memories/img20.jpg">
+    <img src="/static/memories/img21.jpg">
+    <img src="/static/memories/img22.jpg">
+    <img src="/static/memories/img23.jpg">
+    <img src="/static/memories/img24.jpg">
+    <img src="/static/memories/img25.jpg">
+    <img src="/static/memories/img26.jpg">
+    <img src="/static/memories/img27.jpg">
+  </div>
+<audio id="bg-music" loop>
+  <source src="/static/music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const music = document.getElementById("bg-music");
+
+  // Restore time if available
+  const savedTime = localStorage.getItem("musicTime");
+  if (savedTime) {
+    music.currentTime = savedTime;
+  }
+
+  // Play after first interaction (mobile-safe)
+  document.addEventListener("click", () => {
+    music.play();
+    localStorage.setItem("musicPlaying", "true");
+  }, { once: true });
+
+  // Resume automatically if it was playing
+  if (localStorage.getItem("musicPlaying") === "true") {
+    music.play().catch(() => {});
+  }
+
+  // Save current time continuously
+  setInterval(() => {
+    if (!music.paused) {
+      localStorage.setItem("musicTime", music.currentTime);
+    }
+  }, 1000);
+</script>
+
+</body>
+</html>
+
+
+

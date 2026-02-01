@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>She Said YES 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff7aa2, #ff4f81);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .card {
+            background: white;
+            padding: 40px 25px;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 520px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 2;
+        }
+        h1 { color: #ff3b6f; font-size: 26px; margin-bottom: 20px; }
+        p { font-size: 18px; color: #555; margin-bottom: 30px; }
+        .memories-btn {
+            padding: 14px 32px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            background: #ff3b6f;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .memories-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(255,59,111,0.4);
+        }
+        .heart {
+            position: absolute;
+            bottom: -30px;
+            animation: floatUp 8s linear infinite;
+            opacity: 0.9;
+        }
+        @keyframes floatUp {
+            0%   { transform: translateY(0); opacity: 0; }
+            20%  { opacity: 1; }
+            100% { transform: translateY(-120vh); opacity: 0; }
+        }
+        .bg-slider {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            display: flex;
+            gap: 20px;
+            z-index: -1;
+            will-change: transform;
+        }
+        .bg-slider img {
+            height: 100vh;
+            width: auto;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-slider" id="slider">
+    <img src="/static/memories/img1.jpg">
+    <img src="/static/memories/img2.jpg">
+    <img src="/static/memories/img3.jpg">
+    <img src="/static/memories/img4.jpg">
+    <img src="/static/memories/img5.jpg">
+    <img src="/static/memories/img6.jpg">
+    <img src="/static/memories/img7.jpg">
+    <img src="/static/memories/img8.jpg">
+    <img src="/static/memories/img9.jpg">
+    <img src="/static/memories/img10.jpg">
+    <img src="/static/memories/img11.jpg">
+    <img src="/static/memories/img12.jpg">
+    <img src="/static/memories/img13.jpg">
+    <img src="/static/memories/img14.jpg">
+    <img src="/static/memories/img15.jpg">
+    <img src="/static/memories/img16.jpg">
+    <img src="/static/memories/img17.jpg">
+    <img src="/static/memories/img18.jpg">
+    <img src="/static/memories/img19.jpg">
+    <img src="/static/memories/img20.jpg">
+    <img src="/static/memories/img21.jpg">
+    <img src="/static/memories/img22.jpg">
+    <img src="/static/memories/img23.jpg">
+    <img src="/static/memories/img24.jpg">
+    <img src="/static/memories/img25.jpg">
+    <img src="/static/memories/img26.jpg">
+    <img src="/static/memories/img27.jpg">
+</div>
+
+<div class="card">
+    <h1>Yayyyyyy!!!🥰🎀💕</h1>
+    <p>I kneww you'd say YESSS I am soo blessed to haveee you as my girlfrienddd 😍<br>OMGGGG I am the happiest and luckiest person alivee muaaahhhhhhhhh 💖</p>
+    <button class="memories-btn" onclick="window.location.href='/memories'">CLICK HERE😗📸</button>
+</div>
+
+<!-- Floating hearts -->
+<script>
+    for (let i = 0; i < 45; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = ["❤️","💖","💕","💗","💘"][Math.floor(Math.random()*5)];
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.fontSize = (18 + Math.random() * 18) + "px";
+        heart.style.animationDelay = Math.random() * 8 + "s";
+        document.body.appendChild(heart);
+    }
+</script>
+
+<!-- Music -->
+<audio id="bg-music" loop>
+    <source src="/static/music.mp3" type="audio/mpeg">
+</audio>
+<script>
+    const music = document.getElementById("bg-music");
+    const savedTime = localStorage.getItem("musicTime");
+    if (savedTime) music.currentTime = savedTime;
+    document.addEventListener("click", () => {
+        music.play();
+        localStorage.setItem("musicPlaying", "true");
+    }, { once: true });
+    if (localStorage.getItem("musicPlaying") === "true") music.play().catch(() => {});
+    setInterval(() => { if (!music.paused) localStorage.setItem("musicTime", music.currentTime); }, 1000);
+</script>
+
+<!-- SLIDER -->
+<script>
+    const slider = document.getElementById('slider');
+    const images = Array.from(slider.querySelectorAll('img'));
+
+    // Step 1: Wait for all images to load
+    Promise.all(images.map(img => {
+        if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+        return new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+        });
+    })).then(() => {
+
+        // Step 2: Shuffle by MOVING elements in the DOM, NOT by swapping src.
+        // appendChild on an existing element just moves it — no reload needed.
+        // Fisher-Yates shuffle
+        for (let i = images.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            // Move images[j] before images[i] in the DOM
+            slider.insertBefore(images[j], images[i]);
+        }
+
+        // Step 3: Re-read the order from DOM (it changed after shuffle)
+        const shuffled = Array.from(slider.querySelectorAll('img'));
+
+        // Step 4: Clone all 27 and append as second half for seamless loop
+        shuffled.forEach(img => slider.appendChild(img.cloneNode(true)));
+
+        // Step 5: Measure total width of the first 27 — src never changed so
+        // offsetWidth is still correct, no reload happened
+        const allImgs = slider.querySelectorAll('img');
+        const gap = 20;
+        let firstHalfWidth = 0;
+        for (let i = 0; i < 27; i++) {
+            firstHalfWidth += allImgs[i].offsetWidth;
+        }
+        firstHalfWidth += gap * 26;
+
+        // Step 6: Animate
+        let pos = 0;
+        const speed = 0.5; // px per frame. Increase for faster scroll.
+
+        function animate() {
+            pos += speed;
+            if (pos >= firstHalfWidth) {
+                pos = 0;
+            }
+            slider.style.transform = `translateX(-${pos}px)`;
+            requestAnimationFrame(animate);
+        }
+        animate();
+    });
+</script>
+
+</body>
+</html>
